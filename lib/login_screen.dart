@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_promina_task/home_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -89,7 +90,9 @@ class LoginScreen extends StatelessWidget {
                               ),
                             ),
 
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(builder: (_)=> HomeScreen()));
+                            },
                             child: Text(
                               "SUBMIT",
                               style: TextStyle(
