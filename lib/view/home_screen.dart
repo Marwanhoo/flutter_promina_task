@@ -1,3 +1,4 @@
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_promina_task/controller/cubit.dart';
@@ -249,10 +250,14 @@ class HomeScreen extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return ClipRRect(
                               borderRadius: BorderRadius.circular(22),
-                              child: Image.network(
-                                //"https://avatars.githubusercontent.com/u/125823028?v=4",
-                                state.images[index],
-                                fit: BoxFit.cover,
+                              // child: Image.network(
+                              //   //"https://avatars.githubusercontent.com/u/125823028?v=4",
+                              //   state.images[index],
+                              //   fit: BoxFit.cover,
+                              // ),
+                              child: FancyShimmerImage(
+                                imageUrl: state.images[index],
+                                boxFit: BoxFit.cover,
                               ),
                             );
                           },
