@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_promina_task/controller/cubit.dart';
 import 'package:flutter_promina_task/controller/states.dart';
+import 'package:flutter_promina_task/view/gallery_photo_view_wrapper.dart';
 import 'package:flutter_promina_task/view/login_screen.dart';
 import 'package:glassmorphism/glassmorphism.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -248,16 +251,21 @@ class HomeScreen extends StatelessWidget {
                               mainAxisSpacing: 20,
                               crossAxisSpacing: 20),
                           itemBuilder: (context, index) {
-                            return ClipRRect(
-                              borderRadius: BorderRadius.circular(22),
-                              // child: Image.network(
-                              //   //"https://avatars.githubusercontent.com/u/125823028?v=4",
-                              //   state.images[index],
-                              //   fit: BoxFit.cover,
-                              // ),
-                              child: FancyShimmerImage(
-                                imageUrl: state.images[index],
-                                boxFit: BoxFit.cover,
+                            return InkWell(
+                              onTap: (){
+                                BlocProvider.of<ProminaCubit>(context).openGallery(context, index, state.images);
+                              },
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(22),
+                                // child: Image.network(
+                                //   //"https://avatars.githubusercontent.com/u/125823028?v=4",
+                                //   state.images[index],
+                                //   fit: BoxFit.cover,
+                                // ),
+                                child: FancyShimmerImage(
+                                  imageUrl: state.images[index],
+                                  boxFit: BoxFit.cover,
+                                ),
                               ),
                             );
                           },
@@ -277,4 +285,10 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+
+
+
+
 }
+
+

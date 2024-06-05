@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_promina_task/controller/states.dart';
+import 'package:flutter_promina_task/view/gallery_photo_view_wrapper.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:image_picker/image_picker.dart';
@@ -123,6 +125,19 @@ class ProminaCubit extends Cubit<ProminaStates> {
     if(pickedFile != null){
       uploadImage(File(pickedFile.path));
     }
+  }
+
+
+  void openGallery(BuildContext context, int initialIndex, List<String> gallery) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => GalleryPhotoViewWrapper(
+        galleryItems: gallery,
+        backgroundDecoration: const BoxDecoration(
+          color: Colors.black,
+        ),
+        initialIndex: initialIndex,
+      ),
+    ));
   }
 
 
