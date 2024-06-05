@@ -32,6 +32,7 @@ class ProminaCubit extends Cubit<ProminaStates> {
         UserModel user = UserModel.fromJson(jsonData);
         GlobalUser.userModel = user;
         await saveToken(user.token);
+        await saveUserData(user);
         emit(AuthSuccessState());
       } else {
         emit(AuthErrorState("Failed to authenticate"));
@@ -39,6 +40,13 @@ class ProminaCubit extends Cubit<ProminaStates> {
     } catch (e) {
       emit(AuthErrorState(e.toString()));
     }
+  }
+
+  Future<void> saveUserData(UserModel user) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('userId', user.id);
+    await prefs.setString('userName', user.name);
+    await prefs.setString('userEmail', user.email);
   }
 
   Future<void> saveToken(String token) async {
@@ -50,6 +58,10 @@ class ProminaCubit extends Cubit<ProminaStates> {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('authToken');
     if(token != null){
+      final id = prefs.getString('userId')!;
+      final name = prefs.getString('userName')!;
+      final email = prefs.getString('userEmail')!;
+      GlobalUser.userModel = UserModel(id: id, name: name, email: email, token: token);
       emit(AuthSuccessState());
     }else{
       emit(ProminaInitialState());
@@ -60,6 +72,11 @@ class ProminaCubit extends Cubit<ProminaStates> {
   Future<void> logout()async{
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove("authToken");
+    /*
+      await prefs.remove('userId');
+    await prefs.remove('userName');
+    await prefs.remove('userEmail');
+     */
     emit(ProminaInitialState());
   }
 

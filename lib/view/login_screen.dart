@@ -17,7 +17,8 @@ class LoginScreen extends StatelessWidget {
         if(state is AuthSuccessState){
           Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> const HomeScreen()));
         }else if (state is AuthErrorState){
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
+          //ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please Check User Name OR Password")));
         }
       },
       builder: (context, state) {
