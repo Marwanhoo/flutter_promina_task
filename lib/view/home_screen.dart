@@ -1,6 +1,8 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_promina_task/controller/cubit.dart';
+import 'package:flutter_promina_task/view/login_screen.dart';
 import 'package:glassmorphism/glassmorphism.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -21,17 +23,18 @@ class HomeScreen extends StatelessWidget {
           ),
           child: Column(
             children: [
-              const Row(
+               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     "Welcome\nMuhammad",
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 28,
                     ),
                   ),
-                  CircleAvatar(
+                 // Text(GlobalSettings.userModel!.id),
+                  const CircleAvatar(
                     radius: 45,
                     backgroundColor: Colors.white,
                     child: CircleAvatar(
@@ -47,7 +50,31 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: ElevatedButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        showDialog(context: context, builder: (context) {
+                          return AlertDialog(
+                            title: const Text("Logout"),
+                            content: const Text("Are you sure you want to logout?"),
+                            actions: [
+                              TextButton(
+                                onPressed: () async {
+                                  BlocProvider.of<ProminaCubit>(context).logout();
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                          builder: (_) => const LoginScreen()),
+                                          (route) => false);
+                                },
+                                child: const Text("Ok"),
+                              ),
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text("Cancel")),
+                            ],
+                          );
+                        },);
+                      },
                       icon: Image.asset("assets/images/logout.png",width: 25,),
                       label:  const Text("Log out",style: TextStyle(
                         color: Colors.black,
@@ -55,11 +82,7 @@ class HomeScreen extends StatelessWidget {
                       ),),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: IconButton(
-                        onPressed: () {}, icon: const Icon(Icons.abc)),
-                  ),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: ElevatedButton.icon(
                       onPressed: () {
@@ -182,7 +205,7 @@ class HomeScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {},
-        label: const Text("Photo Numbers"),
+        label: const Text("Photos Number"),
         icon: const Text("20"),
       ),
     );
