@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_promina_task/controller/cubit.dart';
 import 'package:flutter_promina_task/controller/states.dart';
+import 'package:flutter_promina_task/core/widgets/text_form_field_widget.dart';
 import 'package:flutter_promina_task/view/home_screen.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -70,35 +71,9 @@ class LoginScreen extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(height: 30),
-                              TextFormField(
-                                controller: usernameController,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(35),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                  fillColor: Colors.grey.shade200,
-                                  filled: true,
-                                  hintText: "User Name",
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 20),
-                                ),
-                              ),
+                              TextFormFieldWidget(controller: usernameController, hintText: "User Name"),
                               const SizedBox(height: 30),
-                              TextFormField(
-                                controller: passwordController,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(35),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                  fillColor: Colors.grey.shade200,
-                                  filled: true,
-                                  hintText: "Password",
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 20),
-                                ),
-                              ),
+                              TextFormFieldWidget(controller: passwordController, hintText: "Password"),
                               const SizedBox(height: 30),
                               ElevatedButton(
                                 style: ElevatedButton.styleFrom(
