@@ -223,7 +223,16 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: 20),
               BlocConsumer<ProminaCubit, ProminaStates>(
                 listener: (context, state) {
-                  // TODO: implement listener
+                  if (state is UploadSuccessState) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Photo uploaded successfully')),
+                    );
+                    Navigator.pop(context);
+                  } else if (state is UploadErrorState) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(state.error)),
+                    );
+                  }
                 },
                 builder: (context, state) {
                     if (state is GalleryLoadingState) {
