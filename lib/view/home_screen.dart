@@ -3,16 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_promina_task/controller/cubit.dart';
 import 'package:flutter_promina_task/controller/states.dart';
-import 'package:flutter_promina_task/view/gallery_photo_view_wrapper.dart';
+import 'package:flutter_promina_task/model/global_user.dart';
 import 'package:flutter_promina_task/view/login_screen.dart';
 import 'package:glassmorphism/glassmorphism.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:photo_view/photo_view.dart';
-import 'package:photo_view/photo_view_gallery.dart';
+
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     ProminaCubit prominaCubit = BlocProvider.of<ProminaCubit>(context);
@@ -30,24 +28,48 @@ class HomeScreen extends StatelessWidget {
           ),
           child: Column(
             children: [
-              const Row(
+               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     "Welcome\nMuhammad",
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 28,
                     ),
                   ),
-                  // Text(GlobalSettings.userModel!.id),
-                  CircleAvatar(
-                    radius: 45,
-                    backgroundColor: Colors.white,
-                    child: CircleAvatar(
-                      radius: 40,
-                      backgroundImage: NetworkImage(
-                          "https://avatars.githubusercontent.com/u/125823028?v=4"),
+                  InkWell(
+                    onTap: (){
+                     showDialog(context: context, builder: (context) {
+                       return AlertDialog(
+                         title: const Text("User"),
+                         content: Column(
+                           crossAxisAlignment: CrossAxisAlignment.start,
+                           mainAxisSize: MainAxisSize.min,
+                           children: [
+                             Text("• ID: ${GlobalUser.userModel?.id}"),
+                             Text("• Name: ${GlobalUser.userModel?.name}"),
+                             Text("• Email: ${GlobalUser.userModel?.email}"),
+                           ],
+                         ),
+                         actions: [
+                           TextButton(
+                               onPressed: () {
+                                 Navigator.of(context).pop();
+                               },
+                               child: const Text("OK")),
+                         ],
+                       );
+                     },);
+                    },
+                    child: const CircleAvatar(
+                      radius: 45,
+                      backgroundColor: Colors.white,
+                      child: CircleAvatar(
+                        radius: 40,
+                        backgroundImage: NetworkImage(
+                            "https://avatars.githubusercontent.com/u/125823028?v=4"),
+                      ),
                     ),
                   ),
                 ],

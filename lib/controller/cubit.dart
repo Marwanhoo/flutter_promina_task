@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_promina_task/controller/states.dart';
+import 'package:flutter_promina_task/model/global_user.dart';
+import 'package:flutter_promina_task/model/user_model.dart';
 import 'package:flutter_promina_task/view/gallery_photo_view_wrapper.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,11 +29,9 @@ class ProminaCubit extends Cubit<ProminaStates> {
 
       if (response.statusCode == 200) {
         final jsonData = json.decode(response.body);
-        print("==========");
-        print("json Data $jsonData");
-        print("==========");
-        final String token = jsonData['token'];
-        await saveToken(token);
+        UserModel user = UserModel.fromJson(jsonData);
+        GlobalUser.userModel = user;
+        await saveToken(user.token);
         emit(AuthSuccessState());
       } else {
         emit(AuthErrorState("Failed to authenticate"));
